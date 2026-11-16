@@ -206,3 +206,5 @@ GitHub.sublime-settings
 
 # Local History for Visual Studio Code
 .history
+# Lock files: this package is installed by its consumers, never from its own lock.
+pnpm-lock.yaml

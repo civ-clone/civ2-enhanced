@@ -15,6 +15,7 @@ import High from '@civ-clone/core-rule/Priorities/High';
 import Player from '@civ-clone/core-player/Player';
 import TurnStart from '@civ-clone/core-player/Rules/TurnStart';
 import { dependenciesOf } from '@civ-clone/civ2-diplomacy/registerRules';
+import isBarbarian from '@civ-clone/base-civilization-barbarian/isBarbarian';
 import isHuman from '@civ-clone/civ2-difficulty/isHuman';
 
 /**
@@ -49,9 +50,18 @@ export const getRules = (
   >
 ): TurnStart[] => {
   const dependencies = dependenciesOf(game as Game),
-    computer = new Criterion(
-      (player: Player): boolean => !isHuman(player, game.clients)
-    );
+    // A computer player, as `civ2-diplomacy`'s rules have it: not a person, not the barbarians.
+    computer = new Criterion((player: Player): boolean => {
+      if (isHuman(player, game.clients)) {
+        return false;
+      }
+
+      try {
+        return !isBarbarian(player);
+      } catch (e) {
+        return true;
+      }
+    });
 
   return [
     new TurnStart(
