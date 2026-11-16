@@ -1,0 +1,20 @@
+/** Every rule set of this package. */
+export declare const ENHANCED = 'civ2-enhanced';
+/**
+ * A computer player's attitude to a person drifts each turn by its own terms, starting from 0 (OpenCiv2's fix of
+ * B3). Takes the place of `civ2-diplomacy`'s drift, which, as the original, starts from a stale value that pins the
+ * attitude at 100 every turn without a border incident. On to start with.
+ */
+export declare const ATTITUDE_DRIFT = 'civ2-enhanced:attitude-drift';
+/**
+ * Every square of a city's radius that a person's units intrude on counts as a border incident (OpenCiv2's fix of B4).
+ * Takes the place of `civ2-diplomacy`'s count, which, as the original, looks only at the first intruded square of
+ * each city. On to start with.
+ */
+export declare const BORDER_INTRUDERS = 'civ2-enhanced:border-intruders';
+/**
+ * A computer player that breaks a treaty it meant to break does so openly, and the treaty ends on both sides
+ * (OpenCiv2's fix of B37). Takes the place of `civ2-diplomacy`'s rule, which, as the original, breaks it without a
+ * word. On to start with.
+ */
+export declare const TREATY_BREAKING = 'civ2-enhanced:treaty-breaking';
