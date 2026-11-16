@@ -114,4 +114,29 @@ describe('registerRules', (): void => {
     expect(run(false)).equal(100);
     expect(run(true)).lessThan(100);
   });
+
+  it('runs each fix where the rule it replaces would: treaties broken, borders counted, then the drift (`civ.cpp:7123`, `:7223`)', (): void => {
+    const game = loadGame(),
+      order = () =>
+        game.rules
+          .get(TurnStart)
+          .map((rule) => rule.id())
+          .filter((id): id is string => id !== null),
+      fixed = order();
+
+    expect(fixed.indexOf(TREATY_BREAKING_RULE)).lessThan(
+      fixed.indexOf(BORDER_INTRUDERS_RULE)
+    );
+    expect(fixed.indexOf(BORDER_INTRUDERS_RULE)).lessThan(
+      fixed.indexOf(ATTITUDE_DRIFT_RULE)
+    );
+
+    game.ruleSets.set(ENHANCED, false);
+
+    const original = order();
+
+    replacements.forEach(([, civ2Rule, rule]) =>
+      expect(fixed.indexOf(rule), rule).equal(original.indexOf(civ2Rule))
+    );
+  });
 });

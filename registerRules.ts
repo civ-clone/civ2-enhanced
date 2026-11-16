@@ -43,7 +43,24 @@ export const register = (game: Game): void => {
     )
   );
 
-  game.rules.register(...playerTurnStart(game));
+  // Each where the rule it replaces runs, to keep Civilization II's order; on its own if that rule isn't loaded.
+  const replaced: { [id: string]: string } = {
+    [ATTITUDE_DRIFT_RULE]: CIV2_ATTITUDE_DRIFT_RULE,
+    [BORDER_INTRUDERS_RULE]: CIV2_BORDER_INTRUDERS_RULE,
+    [TREATY_BREAKING_RULE]: CIV2_TREATY_BREAKING_RULE,
+  };
+
+  playerTurnStart(game).forEach((rule) => {
+    const original = replaced[rule.id() ?? ''];
+
+    if (original !== undefined && game.rules.getById(original) !== null) {
+      game.rules.after(original, rule);
+
+      return;
+    }
+
+    game.rules.register(rule);
+  });
 };
 
 // The plugin loader imports each package for this side effect, as it does `registerRules` elsewhere.
