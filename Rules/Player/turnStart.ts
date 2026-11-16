@@ -69,7 +69,7 @@ export const getRules = (
       new High(),
       computer,
       new Effect((player: Player): void =>
-        countIncidents(dependencies, player, true)
+        countIncidents(dependencies, player, true, game.rng, game.engine)
       )
     ),
     new TurnStart(

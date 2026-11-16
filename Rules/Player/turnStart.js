@@ -32,7 +32,7 @@ const getRules = (game) => {
         }
     });
     return [
-        new TurnStart_1.default(RuleIds_1.BORDER_INTRUDERS_RULE, new High_1.default(), computer, new Effect_1.default((player) => (0, turnStart_1.countIncidents)(dependencies, player, true))),
+        new TurnStart_1.default(RuleIds_1.BORDER_INTRUDERS_RULE, new High_1.default(), computer, new Effect_1.default((player) => (0, turnStart_1.countIncidents)(dependencies, player, true, game.rng, game.engine))),
         new TurnStart_1.default(RuleIds_1.ATTITUDE_DRIFT_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.driftAttitude)(dependencies, player, true))),
         new TurnStart_1.default(RuleIds_1.TREATY_BREAKING_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.breakTreaties)(dependencies, player, game.rng, game.engine, true))),
     ];
