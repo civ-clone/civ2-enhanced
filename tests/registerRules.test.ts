@@ -139,4 +139,8 @@ describe('registerRules', (): void => {
       expect(fixed.indexOf(rule), rule).equal(original.indexOf(civ2Rule))
     );
   });
+
+  it('fails to load before civ2-diplomacy, rather than run its fixes out of order', (): void => {
+    expect(() => register(new Game())).throw();
+  });
 });

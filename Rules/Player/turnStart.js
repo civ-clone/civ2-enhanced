@@ -12,9 +12,9 @@ const isHuman_1 = require("@civ-clone/civ2-difficulty/isHuman");
 /**
  * The fixes to the start of a computer player's turn, through `civ2-diplomacy`'s own functions:
  *
- * - `ATTITUDE_DRIFT_RULE`: the attitude drift starts from 0 (B3);
+ * - `TREATY_BREAKING_RULE`: a treaty broken is broken openly (B37);
  * - `BORDER_INTRUDERS_RULE`: every intruded square counts (B4);
- * - `TREATY_BREAKING_RULE`: a treaty broken is broken openly (B37).
+ * - `ATTITUDE_DRIFT_RULE`: the attitude drift starts from 0 (B3).
  *
  * Each runs where the rule it replaces would (`registerRules`), so the original's order holds: treaties broken, then
  *  the border incidents counted, then the drift (`civ.cpp:7123`, `:7223`).
@@ -34,9 +34,9 @@ const getRules = (game) => {
         }
     });
     return [
+        new TurnStart_1.default(RuleIds_1.TREATY_BREAKING_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.breakTreaties)(dependencies, player, game.rng, game.engine, true))),
         new TurnStart_1.default(RuleIds_1.BORDER_INTRUDERS_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.countIncidents)(dependencies, player, true, game.rng, game.engine))),
         new TurnStart_1.default(RuleIds_1.ATTITUDE_DRIFT_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.driftAttitude)(dependencies, player, true))),
-        new TurnStart_1.default(RuleIds_1.TREATY_BREAKING_RULE, computer, new Effect_1.default((player) => (0, turnStart_1.breakTreaties)(dependencies, player, game.rng, game.engine, true))),
     ];
 };
 exports.getRules = getRules;

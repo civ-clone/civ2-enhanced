@@ -3,9 +3,9 @@ import TurnStart from '@civ-clone/core-player/Rules/TurnStart';
 /**
  * The fixes to the start of a computer player's turn, through `civ2-diplomacy`'s own functions:
  *
- * - `ATTITUDE_DRIFT_RULE`: the attitude drift starts from 0 (B3);
+ * - `TREATY_BREAKING_RULE`: a treaty broken is broken openly (B37);
  * - `BORDER_INTRUDERS_RULE`: every intruded square counts (B4);
- * - `TREATY_BREAKING_RULE`: a treaty broken is broken openly (B37).
+ * - `ATTITUDE_DRIFT_RULE`: the attitude drift starts from 0 (B3).
  *
  * Each runs where the rule it replaces would (`registerRules`), so the original's order holds: treaties broken, then
  *  the border incidents counted, then the drift (`civ.cpp:7123`, `:7223`).
