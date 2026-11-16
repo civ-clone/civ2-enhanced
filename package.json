@@ -35,7 +35,7 @@
     "@civ-clone/base-civilization-barbarian": "^0.1.1",
     "@civ-clone/base-diplomacy": "^0.1.3",
     "@civ-clone/civ2-difficulty": "github:civ-clone/civ2-difficulty",
-    "@civ-clone/civ2-diplomacy": "github:civ-clone/civ2-diplomacy#feat/m2d",
+    "@civ-clone/civ2-diplomacy": "github:civ-clone/civ2-diplomacy",
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-game": "^0.1.17",
     "@civ-clone/core-player": "^0.1.10",
