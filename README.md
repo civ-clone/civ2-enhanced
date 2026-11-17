@@ -121,5 +121,5 @@ that rule runs. Without `civ2-barbarians` loaded they are only orphans.
 - `civ2-enhanced:pollution-score` (`POLLUTION_SCORE`), off to start with: `civ2-enhanced:player/score/pollution`: each
   civilization pays for its own pollution, 10 for each polluted square in its own cities' radii, each counted once,
   with no discount (`civ2-score`'s `pollutionScore`). Supersedes `civ2-score:player/score/pollution`, which, as the
-  original, costs every civilization the same for the whole world's pollution, less half of what lies near computer
+  original, costs every civilization the same for the whole world's pollution, less what lies near computer
   players' cities. civ2-score loads after this package, so the term comes first in the list while the set is on.
