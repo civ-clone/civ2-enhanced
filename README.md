@@ -49,6 +49,7 @@ asked for, with weights 3, 12, 25, 36, 46, 56, 69 and 81. The ratio is `civ2-sci
 reference player, past 19 advances, the paradigm, the 89 advances and the map) with Civilization II's whole ramp, three
 quarters more, as from the twentieth advance on, and without a person's floor of 11 − n; each weight is its tier's
 mean cost in steps of that along a steady path (`civ2-science`'s `fullRampStep`, with
-`@civ-clone/base-science-research-tiered-cost`). Learning every advance steadily then costs within 0.3% of what it does
-by Civilization II's own cost, at every level and on every size of map. Future Technology, and any advance that isn't
-Civilization II's, has no tier and costs what it does by `civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
+`@civ-clone/base-science-research-tiered-cost`). Learning every advance steadily then costs what it does
+by Civilization II's own cost, within about 0.4% at every level and on every size of map, an all-computer game
+included. Future Technology, Plumbing (which no one can research) and any advance that isn't Civilization II's have no
+tier, and cost what they do by `civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
