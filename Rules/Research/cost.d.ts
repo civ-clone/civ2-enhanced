@@ -9,6 +9,7 @@ export type ResearchCostGame = Pick<
   | 'playerResearch'
   | 'playerWorlds'
   | 'requirements'
+  | 'rules'
   | 'turn'
 >;
 export declare const getRules: (game: ResearchCostGame) => Cost[];

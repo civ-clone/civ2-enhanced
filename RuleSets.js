@@ -3,7 +3,7 @@
 //  II as the original plays it (OpenCiv2's Classic behaviour), the fix OpenCiv2 makes by default; all are beneath
 //  `ENHANCED`, so a game can switch them as one.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.POLLUTION_SCORE = exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
+exports.POLLUTION_SCORE = exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.RESEARCH_COST_BY_AGE = exports.AGES = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
 /** Every rule set of this package. */
 exports.ENHANCED = 'civ2-enhanced';
 /**
@@ -30,6 +30,20 @@ exports.TREATY_BREAKING = 'civ2-enhanced:treaty-breaking';
  * `civ2-science`'s cost while it is on. Off to start with.
  */
 exports.FIXED_RESEARCH_COSTS = 'civ2-enhanced:fixed-research-costs';
+/**
+ * Each civilization moves through Civilization II's four epochs as ages as it learns (`Ages`): it enters an age with
+ * the first advance it gains of that epoch, and is told so (civ-clone/web-renderer#1076). The original uses an
+ * advance's epoch only to choose its picture. Rules added to Civilization II's, so nothing to supersede. Off to start
+ * with.
+ */
+exports.AGES = 'civ2-enhanced:ages';
+/**
+ * The research cost follows the player's age, from half in the Ancient to 1.17 times in the Modern, learning every
+ * advance costing about what it does today (`AgeResearchRates`, civ-clone/web-renderer#1077). With either research
+ * cost. Civilization II has no factor of its own to replace, so it adds a `civ2-science` `RateMultiplier` rule and
+ * supersedes nothing. Off to start with.
+ */
+exports.RESEARCH_COST_BY_AGE = 'civ2-enhanced:research-cost-by-age';
 /**
  * A land uprising is sited around the city drawn for it, the same distance east as west, and sized by that city; one
  *  that finds no square is announced (`barbarians:uprising-failed`). Takes the place of `civ2-barbarians`' uprising,

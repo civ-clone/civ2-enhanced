@@ -1,4 +1,5 @@
 import {
+  AGES,
   ATTITUDE_DRIFT,
   BARBARIAN_CITIES,
   BARBARIAN_UPRISINGS,
@@ -6,6 +7,7 @@ import {
   ENHANCED,
   FIXED_RESEARCH_COSTS,
   POLLUTION_SCORE,
+  RESEARCH_COST_BY_AGE,
   TREATY_BREAKING,
 } from '../RuleSets';
 import {
@@ -50,7 +52,7 @@ const enabled = (game: Game, id: string): boolean =>
   game.rules.getById(id)!.enabled();
 
 describe('registerRules', (): void => {
-  it('holds its sets under one parent: three superseding a civ2-diplomacy rule, the fixed research costs, the two barbarian fixes and the pollution score', (): void => {
+  it('holds its sets under one parent: three superseding a civ2-diplomacy rule, the fixed research costs, the ages, the cost by age, the two barbarian fixes and the pollution score', (): void => {
     const game = loadGame();
 
     expect(ENHANCED).equal('civ2-enhanced');
@@ -59,6 +61,8 @@ describe('registerRules', (): void => {
       BORDER_INTRUDERS,
       TREATY_BREAKING,
       FIXED_RESEARCH_COSTS,
+      AGES,
+      RESEARCH_COST_BY_AGE,
       BARBARIAN_UPRISINGS,
       BARBARIAN_CITIES,
       POLLUTION_SCORE,
@@ -69,11 +73,13 @@ describe('registerRules', (): void => {
     });
   });
 
-  it('starts with every fix on and the fixed research costs off, and gives back the original rules when switched off', (): void => {
+  it('starts with every fix on and the fixed research costs, the ages and the cost by age off, and gives back the original rules when switched off', (): void => {
     const game = loadGame();
 
     expect(game.ruleSets.state(ENHANCED)).equal('mixed');
     expect(game.ruleSets.state(FIXED_RESEARCH_COSTS)).equal('off');
+    expect(game.ruleSets.state(AGES)).equal('off');
+    expect(game.ruleSets.state(RESEARCH_COST_BY_AGE)).equal('off');
     replacements.forEach(([, civ2Rule, rule]) => {
       expect(enabled(game, civ2Rule), civ2Rule).false;
       expect(enabled(game, rule), rule).true;

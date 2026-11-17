@@ -1,4 +1,5 @@
 import {
+  AGES,
   ATTITUDE_DRIFT,
   BARBARIAN_CITIES,
   BARBARIAN_UPRISINGS,
@@ -6,13 +7,20 @@ import {
   ENHANCED,
   POLLUTION_SCORE,
   FIXED_RESEARCH_COSTS,
+  RESEARCH_COST_BY_AGE,
   TREATY_BREAKING,
 } from './RuleSets';
 import {
+  AGE_BY_EPOCH_RULE,
+  AGE_REACHED_RULE,
+  AGES_JOINED_RULE,
+  AGES_SETTLED_RULE,
   ATTITUDE_DRIFT_RULE,
   BARBARIAN_CITY_BUILD_RULE,
   BORDER_INTRUDERS_RULE,
   POLLUTION_SCORE_RULE,
+  RATE_MULTIPLIER_BY_AGE_RULE,
+  REACH_AGE_RULE,
   TIERED_COST_RULE,
   TREATY_BREAKING_RULE,
   UPRISING_RULE,
@@ -26,7 +34,9 @@ import barbarianCityBuild from './Rules/Barbarians/cityBuild';
 import pollutionScore from './Rules/Score/pollution';
 import barbarianUprising from './Rules/Barbarians/uprising';
 import { COST_RULE as CIV2_COST_RULE } from '@civ-clone/civ2-science/RuleIds';
+import researchAge from './Rules/Research/age';
 import researchCost from './Rules/Research/cost';
+import rateByAge from './Rules/Research/rateByAge';
 import {
   ATTITUDE_DRIFT_RULE as CIV2_ATTITUDE_DRIFT_RULE,
   BORDER_INTRUDERS_RULE as CIV2_BORDER_INTRUDERS_RULE,
@@ -64,6 +74,22 @@ export const register = (game: Game): void => {
         FIXED_RESEARCH_COSTS,
         { enabled: false, supersedes: [CIV2_COST_RULE] },
         TIERED_COST_RULE
+      ),
+      // civ-clone/web-renderer#1076: rules added to Civilization II's, so nothing to supersede.
+      new RuleSet(
+        AGES,
+        { enabled: false },
+        AGE_BY_EPOCH_RULE,
+        AGES_JOINED_RULE,
+        AGES_SETTLED_RULE,
+        REACH_AGE_RULE,
+        AGE_REACHED_RULE
+      ),
+      // civ-clone/web-renderer#1077: a multiplier Civilization II's cost asks for and has none of its own.
+      new RuleSet(
+        RESEARCH_COST_BY_AGE,
+        { enabled: false },
+        RATE_MULTIPLIER_BY_AGE_RULE
       ),
       new RuleSet(
         BARBARIAN_UPRISINGS,
@@ -115,6 +141,9 @@ export const register = (game: Game): void => {
   // civ-clone/web-renderer#1072: civ2-science is loaded after this, so its cost rule isn't there to be placed after;
   //  only one of the two is ever on.
   game.rules.register(...researchCost(game));
+
+  // civ-clone/web-renderer#1076, #1077: rules of their own, which replace none of civ2-science's.
+  game.rules.register(...researchAge(game), ...rateByAge());
 
   // civ2-score loads after this, too: only one of the two pollution terms is ever on.
   game.rules.register(...pollutionScore(game));

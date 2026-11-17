@@ -54,6 +54,49 @@ by Civilization II's own cost, within about 0.4% at every level and on every siz
 included. Future Technology, Plumbing (which no one can research) and any advance that isn't Civilization II's have no
 tier, and cost what they do by `civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
 
+## Ages
+
+`civ2-enhanced:ages` (`AGES`), off to start with: each civilization moves through Civilization II's four epochs as
+ages as it learns (civ-clone/web-renderer#1076), with `@civ-clone/base-science-age`, as `civ1-enhanced`'s eight do
+by tier. An advance's epoch is RULES.TXT's @CIVILIZE column (`civ2-science`'s `data/advances`), which the original uses
+only to choose the advance's picture: Ancient (25 advances), Renaissance (17, and Plumbing, which no one can learn),
+Industrial (19) and Modern (27). No advance's epoch is earlier than one it needs. A civilization is in the age of the
+latest epoch it knows an advance of, judged by its own advances, and in the Ancient knowing none; Future Technology,
+which can be repeated, and an advance that isn't Civilization II's count for nothing. Nothing is saved, so a game loads
+in the age it was saved in. The ages are named as `civ1-enhanced`'s of the same name, so an interface's words serve
+both.
+
+- `civ2-enhanced:research/age/by-epoch` (`AgeOf`): the age from the epochs (`lib/latestEpoch`).
+- `civ2-enhanced:player/added/hold-ages` and `civ2-enhanced:turn/start/settle-ages`: a civilization added, as the game
+  is set up or when a civil war splits one off with the advances it inherits, tells of no age until the next turn
+  starts.
+- `civ2-enhanced:research/complete/reach-age` (`Complete`, `Low`, after `civ2-science`'s): an advance gained, by any
+  means, that starts a new age processes `AgeReached`, once, with the later age when it jumps over one. Nothing is told
+  on turn 0, so the advances `civ2-player`'s start balancing gives tell of none.
+- `civ2-enhanced:player/age-reached/emit` (`AgeReached`): emits `player:age-reached`.
+
+## Research cost by age
+
+`civ2-enhanced:research-cost-by-age` (`RESEARCH_COST_BY_AGE`), off to start with:
+`civ2-enhanced:research/rate-multiplier/by-age` multiplies the research cost by the player's own age's multiplier
+(civ-clone/web-renderer#1077), with either research cost: 0.5 in the Ancient, 0.66 in the Renaissance, 0.88 in the
+Industrial and 1.17 in the Modern (`AgeResearchRates`), to the nearest whole bulb, then stopping at 32000 as
+Civilization II's does. It is judged by the player's latest age, whether `AGES` is on or not, so a rush into a later age
+makes every advance after it dearer, the ones left behind too, and the advance that starts an age costs what it does in
+the age before. A person's floor of 11 − n stays with Civilization II's own cost, as today, and is multiplied with it;
+the fixed research costs leave it out, as they do now.
+
+It is a `civ2-science` `RateMultiplier` rule, which Civilization II's cost asks for and has none of its own, so it
+supersedes nothing. Civilization II's cost has no catch-up by the calendar to move, as Civilization's has from AD: its
+ratio rises for being ahead of the turn (up to 6) only past a player's own nineteenth advance.
+
+The slide starts at half, as Civilization's first age does, and rises each age by the same factor, 1.328, chosen so that
+learning every advance along the steady path (by prerequisites, as the fixed costs' tiers were set), each at its
+player's age before it, costs what it does today: 0.998 times by Civilization II's cost and 0.996 by the fixed costs.
+Along the computer players' own choices it costs about 1.04 times. A civilization enters the Modern only around its
+fiftieth advance, so that age carries about three fifths of the cost: a slide as steep as Civilization's, to 3, would
+make the whole about 2.3 times as dear, and one whose mean over the advances of each epoch is 1 about 1.3 times.
+
 ## Barbarians
 
 Both off to start with, each superseding a `civ2-barbarians` rule (by the ids in its `RuleIds`) and registered where
