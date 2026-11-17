@@ -53,3 +53,22 @@ mean cost in steps of that along a steady path (`civ2-science`'s `fullRampStep`,
 by Civilization II's own cost, within about 0.4% at every level and on every size of map, an all-computer game
 included. Future Technology, Plumbing (which no one can research) and any advance that isn't Civilization II's have no
 tier, and cost what they do by `civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
+
+## Barbarians
+
+Both off to start with, each superseding a `civ2-barbarians` rule (by the ids in its `RuleIds`) and registered where
+that rule runs. Without `civ2-barbarians` loaded they are only orphans.
+
+- `civ2-enhanced:barbarian-uprisings` (`BARBARIAN_UPRISINGS`): `civ2-enhanced:turn/start/land-uprising` runs the turn's
+  land uprising with `civ2-barbarians`' `landUprising` and three corrections: the square's offset east runs −12 to 12
+  half columns, as far east as west (the original's `(r % 13) × 2 − 6` runs −6 to 18); every try is centred on the
+  city drawn for the uprising, which the square must share a land mass with and which sizes the horde (the original
+  goes by whichever city is nearest each try, a computer player's perhaps); and an uprising that finds no square is
+  announced, `barbarians:uprising-failed` with the city's player and the city (the original drops it without a word).
+  Supersedes `civ2-barbarians:turn/start/land-uprising`.
+- `civ2-enhanced:barbarian-cities` (`BARBARIAN_CITIES`): `civ2-enhanced:city/build/barbarian` has a barbarian city
+  that isn't building a unit start with the main unit of the barbarians' own uprising table for what anyone knows
+  (Chariots, then Archers with Gunpowder, Cannon with Industrialization, and so on), where the original starts it on the
+  Legion, or Knights once anyone knows Explosives. It keeps and upgrades its unit as the original does. Supersedes
+  `civ2-barbarians:city/build/units-only`. Barbarian cities still build no improvements: the barbarians know no
+  advances, so almost none would be open to them.
