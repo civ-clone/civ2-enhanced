@@ -20,7 +20,7 @@ import Player from '@civ-clone/core-player/Player';
 import check from '@civ-clone/base-science-research-tiered-cost/lib/check';
 import { expect } from 'chai';
 import prerequisiteCounts from '@civ-clone/base-science-research-tiered-cost/lib/prerequisites';
-import { rampedStep } from '@civ-clone/civ2-science/lib/cost';
+import { fullRampStep } from '@civ-clone/civ2-science/lib/cost';
 import register from '../registerRules';
 import { register as registerDiplomacy } from '@civ-clone/civ2-diplomacy/registerRules';
 import { register as registerScience } from '@civ-clone/civ2-science/registerRules';
@@ -83,7 +83,7 @@ describe('fixed research costs (civ-clone/web-renderer#1072)', (): void => {
     expect(advances).to.have.length(88);
     expect(
       check(advances, game.requirements.entries(), researchTiers, {
-        stepCost: rampedStep,
+        stepCost: fullRampStep,
         tolerance: 0.005,
       })
     ).to.eql([]);
@@ -92,7 +92,7 @@ describe('fixed research costs (civ-clone/web-renderer#1072)', (): void => {
     const exact = positionWeights(
       prerequisiteCounts(advances, game.requirements.entries()),
       researchTiers.map(({ upTo }) => upTo),
-      rampedStep
+      fullRampStep
     );
 
     researchTiers.forEach(({ weight }, index) =>
@@ -100,23 +100,24 @@ describe('fixed research costs (civ-clone/web-renderer#1072)', (): void => {
     );
   });
 
-  it("should cost an advance its tier's weight times the ratio without the ramp or the floor", (): void => {
-    // Knowing nothing (1, as Civilization II counts): 12 × 67 / 89 = 9. Alphabet is in the first tier: 5 × 9.
+  it("should cost an advance its tier's weight times the ratio with the whole ramp and without the floor", (): void => {
+    // Knowing nothing (1, as Civilization II counts): 12 + 9 = 21, × 67 / 89 = 15. Alphabet is in the first tier: 3 × 15.
     expect(setUp().cost(Alphabet)).to.eql({ rules: [TIERED_COST], cost: 45 });
-    // Writing needs Alphabet, the second tier: 22 × 9.
-    expect(setUp({ known: [Alphabet] }).cost(Writing).cost).to.equal(198);
+    // Writing needs Alphabet, the second tier: 12 × 15.
+    expect(setUp({ known: [Alphabet] }).cost(Writing).cost).to.equal(180);
   });
 
   it('should cost the same however many advances its player knows, so a beeline gets no discount', (): void => {
-    const tiers = prerequisiteCounts(
-        tieredAdvances(setUp().game),
-        setUp().game.requirements.entries()
+    const { game } = setUp(),
+      tiers = prerequisiteCounts(
+        tieredAdvances(game),
+        game.requirements.entries()
       ),
       republic = researchTiers[tierOf(tiers.get(TheRepublic)!, researchTiers)];
 
-    // Fewer than 20 known, level with the reference: the ratio is 9 however many.
+    // Fewer than 20 known, level with the reference: the ratio is 15 however many.
     expect(setUp({ known: [Alphabet] }).cost(TheRepublic).cost).to.equal(
-      republic.weight * 9
+      republic.weight * 15
     );
     expect(
       setUp({
@@ -125,7 +126,18 @@ describe('fixed research costs (civ-clone/web-renderer#1072)', (): void => {
           .filter((AdvanceType) => AdvanceType !== TheRepublic)
           .slice(0, 12),
       }).cost(TheRepublic).cost
-    ).to.equal(republic.weight * 9);
+    ).to.equal(republic.weight * 15);
+  });
+
+  it("should leave an advance that isn't Civilization II's to civ2-science's cost, rather than fail", (): void => {
+    class Extra extends Advance {}
+
+    const { game, cost } = setUp();
+
+    game.advances.register(Extra);
+
+    expect(cost(Extra).cost).to.equal(setUp({ on: false }).cost(Extra).cost);
+    expect(cost(Alphabet).cost).to.equal(45);
   });
 
   it("should leave Future Technology to civ2-science's cost", (): void => {

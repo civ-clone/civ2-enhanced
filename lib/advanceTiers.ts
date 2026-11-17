@@ -11,11 +11,16 @@ import { tierOf } from '@civ-clone/base-science-research-tiered-cost/lib/tiers';
 /** The parts of a game an advance's tier is read from. */
 export type TiersGame = Pick<Game, 'advances' | 'requirements'>;
 
-/** The advances that have a tier: those the game makes available (not Plumbing) and that can't be repeated. */
+/**
+ * The advances that have a tier: Civilization II's that the game makes available (not Plumbing) and that can't be
+ * repeated. One a plugin adds that isn't Civilization II's has none, and costs what it does by `civ2-science`'s rule.
+ */
 export const tieredAdvances = (game: TiersGame): (typeof Advance)[] =>
   game.advances.filter(
     (AdvanceType: typeof Advance): boolean =>
-      !AdvanceType.repeatable && isEnabled(advanceIndex(AdvanceType))
+      !AdvanceType.repeatable &&
+      advanceIndex(AdvanceType) >= 0 &&
+      isEnabled(advanceIndex(AdvanceType))
   );
 
 const kept = new WeakMap<TiersGame, Map<typeof Advance, number>>();

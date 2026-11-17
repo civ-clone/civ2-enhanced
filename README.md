@@ -45,9 +45,10 @@ costs each advance a fixed weight by its tier times Civilization II's ratio, how
 (civ-clone/web-renderer#1072), so a beeline that skips the dead ends costs what learning steadily does. The tiers
 (`ResearchTiers.ts`) band the 88 advances that can be learnt once by how many advances each needs in its whole tree
 (0, 1–3, 4–8, 9–15, 16–25, 26–36, 37–50, 51 or more), read from the game's `requires` entries when the first cost is
-asked for, with weights 5, 22, 44, 62, 80, 99, 120 and 143: each tier's mean cost along a steady path by Civilization
-II's own ramp (`civ2-science`'s `rampedStep`, with `@civ-clone/base-science-research-tiered-cost`), adding up to
-6,811 steps of the ratio against 6,803 by Civilization II's cost. The ratio is `civ2-science`'s `researchRate`
-(difficulty, the reference player, past 19 advances, the paradigm, the 89 advances and the map) without its ramp, which
-the weights carry, and without a person's floor of 11 − n. Future Technology has no tier and costs what it does by
-`civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
+asked for, with weights 3, 12, 25, 36, 46, 56, 69 and 81. The ratio is `civ2-science`'s `researchRate` (difficulty, the
+reference player, past 19 advances, the paradigm, the 89 advances and the map) with Civilization II's whole ramp, three
+quarters more, as from the twentieth advance on, and without a person's floor of 11 − n; each weight is its tier's
+mean cost in steps of that along a steady path (`civ2-science`'s `fullRampStep`, with
+`@civ-clone/base-science-research-tiered-cost`). Learning every advance steadily then costs within 0.3% of what it does
+by Civilization II's own cost, at every level and on every size of map. Future Technology, and any advance that isn't
+Civilization II's, has no tier and costs what it does by `civ2-science`'s rule. Supersedes `civ2-science:research/cost`.
