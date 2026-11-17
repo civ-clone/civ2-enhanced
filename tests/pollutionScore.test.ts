@@ -72,7 +72,7 @@ const score = (stub: any, player: Player): number =>
     .find((answer: any) => answer.term === 'pollution').value;
 
 describe('pollution score (civ_calc_score)', (): void => {
-  it("costs each civilization 10 for each polluted square in its own cities' radii, its computer cities discounting theirs", (): void => {
+  it("costs each civilization 10 for each polluted square in its own cities' radii, each once, with no discount", (): void => {
     const { city, computer, person, pollute, stub } = setUp();
 
     city(person, squares[0], squares[1], squares[2]);
@@ -80,10 +80,10 @@ describe('pollution score (civ_calc_score)', (): void => {
     city(computer, squares[3], squares[4]);
     pollute(squares[0], squares[2], squares[3], squares[9]);
 
-    // The person: squares 0 and 2 polluted in their radius, none discounted: −20.
+    // The person: squares 0 and 2 polluted in their radius: −20.
     expect(score(stub, person)).equal(-20);
-    // The computer: 2 and 3 polluted (3 in two of its radii): 2 − 3 = −1, × −10: 10.
-    expect(score(stub, computer)).equal(10);
+    // The computer: 2 and 3 polluted (3 in two of its radii, counted once): −20. Square 9 is no one's.
+    expect(score(stub, computer)).equal(-20);
   });
 });
 

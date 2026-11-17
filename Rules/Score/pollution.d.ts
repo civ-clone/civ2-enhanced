@@ -6,13 +6,15 @@ export type PollutionScoreGame = Pick<
   'cities' | 'clients' | 'tileImprovements'
 >;
 /**
- * `player`'s own pollution, as `civ2-score`'s `worldPollution` counts the world's: the polluted squares in its cities'
- *  radii, and, for a computer player, those counted again for each of its cities that holds them.
+ * How many polluted squares are in `player`'s cities' radii, each once: its own pollution, which it pays for in full.
  */
 export declare const ownPollution: (
   game: PollutionScoreGame,
   player: Player
-) => import('@civ-clone/civ2-score/lib/pollution').WorldPollution;
-/** `civ2-score`'s pollution term (`civ_calc_score`), from `player`'s own pollution rather than the world's. */
+) => number;
+/**
+ * `civ2-score`'s pollution term (`civ_calc_score`), from `player`'s own pollution: each civilization pays 10 for each
+ *  polluted square around its own cities, with no discount, rather than everyone paying for the world's.
+ */
 export declare const getRules: (game: PollutionScoreGame) => Score[];
 export default getRules;

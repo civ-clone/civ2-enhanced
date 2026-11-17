@@ -6,7 +6,11 @@ import {
   LAND_UPRISING_RULE as CIV2_LAND_UPRISING_RULE,
 } from '@civ-clone/civ2-barbarians/RuleIds';
 import { Explosives, Gunpowder } from '@civ-clone/civ2-science/Advances';
-import { UPRISING_FAILED, fixedUprising } from '../Rules/Barbarians/uprising';
+import uprisingRules, {
+  UPRISING_FAILED,
+  fixedUprising,
+} from '../Rules/Barbarians/uprising';
+import { raidFailed } from '@civ-clone/civ2-barbarians/lib/seaRaid';
 import { Build } from '@civ-clone/core-city-build/Rules/Build';
 import { CLASSIC_UPRISING } from '@civ-clone/civ2-barbarians/lib/uprising';
 import City from '@civ-clone/core-city/City';
@@ -104,6 +108,49 @@ describe('barbarian fixes: uprisings (barbarians_city_uprising)', (): void => {
     expect(events).length(1);
     expect(events[0][0] === player).true;
     expect(events[0][1] === city).true;
+  });
+});
+
+describe('barbarian fixes: the uprising rule', (): void => {
+  it('raises no uprising on a turn whose raid found no square, as the original (`game.cpp` 1587)', (): void => {
+    const run = (skipped: boolean): number => {
+      let draws = 0;
+
+      const game = new Game(),
+        player = new Player(game.rules),
+        stub = Object.assign(Object.create(game), {
+          // Two standing cities, so drawing one takes a number; a computer player's, so no uprising follows.
+          cities: {
+            entries: () =>
+              [1, 2].map(
+                () =>
+                  ({
+                    destroyed: () => false,
+                    player: () => player,
+                  } as unknown as City)
+              ),
+          },
+          rng: () => {
+            draws++;
+
+            return 0.5;
+          },
+        }) as any,
+        [rule] = uprisingRules(stub);
+
+      stub.turn.increment();
+
+      if (skipped) {
+        raidFailed(stub, stub.turn.value());
+      }
+
+      rule.process(stub.turn);
+
+      return draws;
+    };
+
+    expect(run(false)).equal(1);
+    expect(run(true)).equal(0);
   });
 });
 

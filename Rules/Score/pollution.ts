@@ -7,7 +7,6 @@ import Pollution from '@civ-clone/base-tile-improvement-pollution/Pollution';
 import { POLLUTION_SCORE_RULE } from '../../RuleIds';
 import Score from '@civ-clone/core-score/Rules/Score';
 import Tile from '@civ-clone/core-world/Tile';
-import isHuman from '@civ-clone/civ2-difficulty/isHuman';
 import { pollutionScore } from '@civ-clone/civ2-score/lib/scoring';
 import worldPollution from '@civ-clone/civ2-score/lib/pollution';
 
@@ -17,35 +16,41 @@ export type PollutionScoreGame = Pick<
 >;
 
 /**
- * `player`'s own pollution, as `civ2-score`'s `worldPollution` counts the world's: the polluted squares in its cities'
- *  radii, and, for a computer player, those counted again for each of its cities that holds them.
+ * How many polluted squares are in `player`'s cities' radii, each once: its own pollution, which it pays for in full.
  */
-export const ownPollution = (game: PollutionScoreGame, player: Player) => {
-  const cities = game.cities
+export const ownPollution = (
+  game: PollutionScoreGame,
+  player: Player
+): number => {
+  const radii = new Set<Tile>(
+    game.cities
       .getByPlayer(player)
-      .filter((city: City): boolean => !city.destroyed()),
-    radii = new Set<Tile>(
-      cities.flatMap((city: City): Tile[] => city.tiles().entries())
-    );
+      .filter((city: City): boolean => !city.destroyed())
+      .flatMap((city: City): Tile[] => city.tiles().entries())
+  );
 
   return worldPollution(
     game.tileImprovements.filter(
       (improvement) =>
         improvement instanceof Pollution && radii.has(improvement.tile())
     ),
-    isHuman(player, game.clients) ? [] : cities
-  );
+    []
+  ).polluted;
 };
 
-/** `civ2-score`'s pollution term (`civ_calc_score`), from `player`'s own pollution rather than the world's. */
+/**
+ * `civ2-score`'s pollution term (`civ_calc_score`), from `player`'s own pollution: each civilization pays 10 for each
+ *  polluted square around its own cities, with no discount, rather than everyone paying for the world's.
+ */
 export const getRules = (game: PollutionScoreGame): Score[] => [
   new Score(
     POLLUTION_SCORE_RULE,
-    new Effect((player: Player): IScoreTerm => {
-      const { polluted, discounted } = ownPollution(game, player);
-
-      return { term: 'pollution', value: pollutionScore(polluted, discounted) };
-    })
+    new Effect(
+      (player: Player): IScoreTerm => ({
+        term: 'pollution',
+        value: pollutionScore(ownPollution(game, player), 0),
+      })
+    )
   ),
 ];
 
