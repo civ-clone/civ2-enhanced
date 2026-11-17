@@ -32,16 +32,28 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "@civ-clone/base-barbarians": "^0.1.0",
     "@civ-clone/base-civilization-barbarian": "^0.1.1",
     "@civ-clone/base-diplomacy": "^0.1.3",
     "@civ-clone/base-science-research-tiered-cost": "^0.1.1",
+    "@civ-clone/base-tile-improvement-pollution": "^0.1.0",
+    "@civ-clone/civ2-barbarians": "github:civ-clone/civ2-barbarians",
     "@civ-clone/civ2-difficulty": "github:civ-clone/civ2-difficulty",
     "@civ-clone/civ2-diplomacy": "github:civ-clone/civ2-diplomacy",
     "@civ-clone/civ2-science": "github:civ-clone/civ2-science",
+    "@civ-clone/civ2-score": "github:civ-clone/civ2-score",
+    "@civ-clone/civ2-unit": "github:civ-clone/civ2-unit",
+    "@civ-clone/core-city": "^0.1.26",
+    "@civ-clone/core-city-build": "^0.1.23",
     "@civ-clone/core-engine": "^0.1.0",
     "@civ-clone/core-game": "^0.1.17",
     "@civ-clone/core-player": "^0.1.10",
+    "@civ-clone/core-registry": "^0.1.6",
     "@civ-clone/core-rule": "^0.1.9",
-    "@civ-clone/core-science": "^0.1.9"
+    "@civ-clone/core-science": "^0.1.9",
+    "@civ-clone/core-score": "^0.1.0",
+    "@civ-clone/core-turn-based-game": "^0.1.10",
+    "@civ-clone/core-unit": "^0.1.32",
+    "@civ-clone/core-world": "^0.1.24"
   }
 }

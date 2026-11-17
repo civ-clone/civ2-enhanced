@@ -14,3 +14,12 @@ export const TREATY_BREAKING_RULE =
 
 /** An advance costs its tier's weight times Civilization II's ratio, whatever its player knows. */
 export const TIERED_COST_RULE = 'civ2-enhanced:research/cost/by-tier';
+
+/** A land uprising sited and sized by the city drawn for it, and announced when it finds no square. */
+export const UPRISING_RULE = 'civ2-enhanced:turn/start/land-uprising';
+
+/** A barbarian city starts with the main unit of the barbarians' uprising table. */
+export const BARBARIAN_CITY_BUILD_RULE = 'civ2-enhanced:city/build/barbarian';
+
+/** A civilization's score loses 10 for each polluted square in its own cities' radii, each once. */
+export const POLLUTION_SCORE_RULE = 'civ2-enhanced:player/score/pollution';

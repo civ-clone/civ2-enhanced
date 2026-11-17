@@ -25,3 +25,22 @@ export declare const TREATY_BREAKING = 'civ2-enhanced:treaty-breaking';
  */
 export declare const FIXED_RESEARCH_COSTS =
   'civ2-enhanced:fixed-research-costs';
+/**
+ * A land uprising is sited around the city drawn for it, the same distance east as west, and sized by that city; one
+ *  that finds no square is announced (`barbarians:uprising-failed`). Takes the place of `civ2-barbarians`' uprising,
+ *  which, as the original, searches lopsided to the east, goes by whichever city is nearest each try (a computer
+ *  player's, perhaps) and drops a failed uprising without a word. Off to start with.
+ */
+export declare const BARBARIAN_UPRISINGS = 'civ2-enhanced:barbarian-uprisings';
+/**
+ * A barbarian city starts with the main unit of the barbarians' own uprising table for what anyone knows, rather than
+ *  the original's Legion, or Knights once anyone knows Explosives. Takes the place of `civ2-barbarians`' city build.
+ *  Off to start with.
+ */
+export declare const BARBARIAN_CITIES = 'civ2-enhanced:barbarian-cities';
+/**
+ * Each civilization pays for its own pollution: its score loses 10 for each polluted square in its own cities' radii,
+ *  each once, rather than for every polluted square in the world. Takes the place of `civ2-score`'s pollution
+ *  term, which, as the original, gives every civilization the same, whole-world penalty. Off to start with.
+ */
+export declare const POLLUTION_SCORE = 'civ2-enhanced:pollution-score';
