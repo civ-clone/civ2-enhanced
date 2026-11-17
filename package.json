@@ -1,6 +1,6 @@
 {
   "name": "@civ-clone/civ2-enhanced",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "index.js",
   "description": "Rule sets that change Civilization II's rules, each one a game can switch.",
   "repository": "git@github.com:civ-clone/civ2-enhanced.git",
