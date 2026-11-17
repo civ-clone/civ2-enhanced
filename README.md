@@ -71,4 +71,13 @@ that rule runs. Without `civ2-barbarians` loaded they are only orphans.
   (Chariots, then Archers with Gunpowder, Cannon with Industrialization, and so on), where the original starts it on the
   Legion, or Knights once anyone knows Explosives. It keeps and upgrades its unit as the original does. Supersedes
   `civ2-barbarians:city/build/units-only`. Barbarian cities still build no improvements: the barbarians know no
-  advances, so almost none would be open to them.
+  advances, so only Barracks would be open to them; whether they should build any is left open.
+
+## Score
+
+- `civ2-enhanced:pollution-score` (`POLLUTION_SCORE`), off to start with: `civ2-enhanced:player/score/pollution` costs a
+  civilization 10 for each polluted square in its own cities' radii, less, for a computer player, one for each time a
+  square falls in one of its cities' radii (`civ2-score`'s `worldPollution` and `pollutionScore`, given its own
+  squares). Supersedes `civ2-score:player/score/pollution`, which, as the original, costs every civilization the
+  same for the whole world's pollution. civ2-score loads after this package, so the term comes first in the list while
+  the set is on.

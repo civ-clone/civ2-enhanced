@@ -3,7 +3,7 @@
 //  II as the original plays it (OpenCiv2's Classic behaviour), the fix OpenCiv2 makes by default; all are beneath
 //  `ENHANCED`, so a game can switch them as one.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
+exports.POLLUTION_SCORE = exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
 /** Every rule set of this package. */
 exports.ENHANCED = 'civ2-enhanced';
 /**
@@ -43,4 +43,10 @@ exports.BARBARIAN_UPRISINGS = 'civ2-enhanced:barbarian-uprisings';
  *  Off to start with.
  */
 exports.BARBARIAN_CITIES = 'civ2-enhanced:barbarian-cities';
+/**
+ * Each civilization's score loses 10 for each polluted square in its own cities' radii (less those its own computer
+ *  cities discount), rather than for every polluted square in the world. Takes the place of `civ2-score`'s pollution
+ *  term, which, as the original, gives every civilization the same, whole-world penalty. Off to start with.
+ */
+exports.POLLUTION_SCORE = 'civ2-enhanced:pollution-score';
 //# sourceMappingURL=RuleSets.js.map

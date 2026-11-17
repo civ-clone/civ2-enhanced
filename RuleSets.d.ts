@@ -38,3 +38,9 @@ export declare const BARBARIAN_UPRISINGS = 'civ2-enhanced:barbarian-uprisings';
  *  Off to start with.
  */
 export declare const BARBARIAN_CITIES = 'civ2-enhanced:barbarian-cities';
+/**
+ * Each civilization's score loses 10 for each polluted square in its own cities' radii (less those its own computer
+ *  cities discount), rather than for every polluted square in the world. Takes the place of `civ2-score`'s pollution
+ *  term, which, as the original, gives every civilization the same, whole-world penalty. Off to start with.
+ */
+export declare const POLLUTION_SCORE = 'civ2-enhanced:pollution-score';
