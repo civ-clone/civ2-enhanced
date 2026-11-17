@@ -3,7 +3,7 @@
 //  II as the original plays it (OpenCiv2's Classic behaviour), the fix OpenCiv2 makes by default; all are beneath
 //  `ENHANCED`, so a game can switch them as one.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
+exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
 /** Every rule set of this package. */
 exports.ENHANCED = 'civ2-enhanced';
 /**
@@ -24,4 +24,10 @@ exports.BORDER_INTRUDERS = 'civ2-enhanced:border-intruders';
  * word. On to start with.
  */
 exports.TREATY_BREAKING = 'civ2-enhanced:treaty-breaking';
+/**
+ * Each advance costs a fixed weight by its tier (`ResearchTiers`) times Civilization II's ratio, however many advances
+ * its player knows, so a beeline costs what learning steadily does (civ-clone/web-renderer#1072). Takes the place of
+ * `civ2-science`'s cost while it is on. Off to start with.
+ */
+exports.FIXED_RESEARCH_COSTS = 'civ2-enhanced:fixed-research-costs';
 //# sourceMappingURL=RuleSets.js.map

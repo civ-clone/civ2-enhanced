@@ -37,3 +37,17 @@ the original reviews its relations only with the human.
   `civ2-diplomacy:player/turn-start/treaty-breaking`, which, as the original, breaks it without a word (B37: the
   original ends it on the computer player's side only, so the person's side still reads the treaty; civ-clone keeps one
   treaty for both sides, so it ends for both, unannounced).
+
+## Fixed research costs
+
+`civ2-enhanced:fixed-research-costs` (`FIXED_RESEARCH_COSTS`), off to start with: `civ2-enhanced:research/cost/by-tier`
+costs each advance a fixed weight by its tier times Civilization II's ratio, however many advances its player knows
+(civ-clone/web-renderer#1072), so a beeline that skips the dead ends costs what learning steadily does. The tiers
+(`ResearchTiers.ts`) band the 88 advances that can be learnt once by how many advances each needs in its whole tree
+(0, 1–3, 4–8, 9–15, 16–25, 26–36, 37–50, 51 or more), read from the game's `requires` entries when the first cost is
+asked for, with weights 5, 22, 44, 62, 80, 99, 120 and 143: each tier's mean cost along a steady path by Civilization
+II's own ramp (`civ2-science`'s `rampedStep`, with `@civ-clone/base-science-research-tiered-cost`), adding up to
+6,811 steps of the ratio against 6,803 by Civilization II's cost. The ratio is `civ2-science`'s `researchRate`
+(difficulty, the reference player, past 19 advances, the paradigm, the 89 advances and the map) without its ramp, which
+the weights carry, and without a person's floor of 11 − n. Future Technology has no tier and costs what it does by
+`civ2-science`'s rule. Supersedes `civ2-science:research/cost`.

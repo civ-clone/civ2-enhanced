@@ -2,13 +2,17 @@ import {
   ATTITUDE_DRIFT,
   BORDER_INTRUDERS,
   ENHANCED,
+  FIXED_RESEARCH_COSTS,
   TREATY_BREAKING,
 } from './RuleSets';
 import {
   ATTITUDE_DRIFT_RULE,
   BORDER_INTRUDERS_RULE,
+  TIERED_COST_RULE,
   TREATY_BREAKING_RULE,
 } from './RuleIds';
+import { COST_RULE as CIV2_COST_RULE } from '@civ-clone/civ2-science/RuleIds';
+import researchCost from './Rules/Research/cost';
 import {
   ATTITUDE_DRIFT_RULE as CIV2_ATTITUDE_DRIFT_RULE,
   BORDER_INTRUDERS_RULE as CIV2_BORDER_INTRUDERS_RULE,
@@ -39,6 +43,12 @@ export const register = (game: Game): void => {
         TREATY_BREAKING,
         { supersedes: [CIV2_TREATY_BREAKING_RULE] },
         TREATY_BREAKING_RULE
+      ),
+      // civ-clone/web-renderer#1072
+      new RuleSet(
+        FIXED_RESEARCH_COSTS,
+        { enabled: false, supersedes: [CIV2_COST_RULE] },
+        TIERED_COST_RULE
       )
     )
   );
@@ -54,6 +64,10 @@ export const register = (game: Game): void => {
   playerTurnStart(game).forEach((rule) =>
     game.rules.after(replaced[rule.id()!], rule)
   );
+
+  // civ-clone/web-renderer#1072: civ2-science is loaded after this, so its cost rule isn't there to be placed after;
+  //  only one of the two is ever on.
+  game.rules.register(...researchCost(game));
 };
 
 // The plugin loader imports each package for this side effect, as it does `registerRules` elsewhere.

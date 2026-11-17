@@ -2,6 +2,7 @@ import {
   ATTITUDE_DRIFT,
   BORDER_INTRUDERS,
   ENHANCED,
+  FIXED_RESEARCH_COSTS,
   TREATY_BREAKING,
 } from '../RuleSets';
 import {
@@ -46,7 +47,7 @@ const enabled = (game: Game, id: string): boolean =>
   game.rules.getById(id)!.enabled();
 
 describe('registerRules', (): void => {
-  it('holds its three sets under one parent, each superseding a civ2-diplomacy rule', (): void => {
+  it('holds its four sets under one parent: three superseding a civ2-diplomacy rule, and the fixed research costs', (): void => {
     const game = loadGame();
 
     expect(ENHANCED).equal('civ2-enhanced');
@@ -54,6 +55,7 @@ describe('registerRules', (): void => {
       ATTITUDE_DRIFT,
       BORDER_INTRUDERS,
       TREATY_BREAKING,
+      FIXED_RESEARCH_COSTS,
     ]);
     replacements.forEach(([set, civ2Rule, rule]) => {
       expect(game.ruleSets.get(set)!.supersedes(), set).eql([civ2Rule]);
@@ -61,10 +63,11 @@ describe('registerRules', (): void => {
     });
   });
 
-  it('starts with every fix on, and gives back the original rules when switched off', (): void => {
+  it('starts with every fix on and the fixed research costs off, and gives back the original rules when switched off', (): void => {
     const game = loadGame();
 
-    expect(game.ruleSets.state(ENHANCED)).equal('on');
+    expect(game.ruleSets.state(ENHANCED)).equal('mixed');
+    expect(game.ruleSets.state(FIXED_RESEARCH_COSTS)).equal('off');
     replacements.forEach(([, civ2Rule, rule]) => {
       expect(enabled(game, civ2Rule), civ2Rule).false;
       expect(enabled(game, rule), rule).true;

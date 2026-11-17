@@ -25,3 +25,10 @@ export const BORDER_INTRUDERS = 'civ2-enhanced:border-intruders';
  * word. On to start with.
  */
 export const TREATY_BREAKING = 'civ2-enhanced:treaty-breaking';
+
+/**
+ * Each advance costs a fixed weight by its tier (`ResearchTiers`) times Civilization II's ratio, however many advances
+ * its player knows, so a beeline costs what learning steadily does (civ-clone/web-renderer#1072). Takes the place of
+ * `civ2-science`'s cost while it is on. Off to start with.
+ */
+export const FIXED_RESEARCH_COSTS = 'civ2-enhanced:fixed-research-costs';
