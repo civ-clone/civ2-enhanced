@@ -31,3 +31,6 @@ export declare const BARBARIAN_CITY_BUILD_RULE =
 /** A civilization's score loses 10 for each polluted square in its own cities' radii, each once. */
 export declare const POLLUTION_SCORE_RULE =
   'civ2-enhanced:player/score/pollution';
+/** A computer player's launch, waiting above King for another computer player's ship that would arrive first. */
+export declare const COMPUTER_LAUNCH_WAIT_RULE =
+  'civ2-enhanced:spaceship/computer/launch';

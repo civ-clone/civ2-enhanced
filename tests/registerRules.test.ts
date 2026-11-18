@@ -4,6 +4,7 @@ import {
   BARBARIAN_CITIES,
   BARBARIAN_UPRISINGS,
   BORDER_INTRUDERS,
+  COMPUTER_LAUNCH_WAIT,
   ENHANCED,
   FIXED_RESEARCH_COSTS,
   POLLUTION_SCORE,
@@ -52,7 +53,7 @@ const enabled = (game: Game, id: string): boolean =>
   game.rules.getById(id)!.enabled();
 
 describe('registerRules', (): void => {
-  it('holds its sets under one parent: three superseding a civ2-diplomacy rule, the fixed research costs, the ages, the cost by age, the two barbarian fixes and the pollution score', (): void => {
+  it('holds its sets under one parent: three superseding a civ2-diplomacy rule, the fixed research costs, the ages, the cost by age, the two barbarian fixes, the pollution score and the computer launch wait', (): void => {
     const game = loadGame();
 
     expect(ENHANCED).equal('civ2-enhanced');
@@ -66,6 +67,7 @@ describe('registerRules', (): void => {
       BARBARIAN_UPRISINGS,
       BARBARIAN_CITIES,
       POLLUTION_SCORE,
+      COMPUTER_LAUNCH_WAIT,
     ]);
     replacements.forEach(([set, civ2Rule, rule]) => {
       expect(game.ruleSets.get(set)!.supersedes(), set).eql([civ2Rule]);

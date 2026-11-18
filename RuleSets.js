@@ -3,7 +3,7 @@
 //  II as the original plays it (OpenCiv2's Classic behaviour), the fix OpenCiv2 makes by default; all are beneath
 //  `ENHANCED`, so a game can switch them as one.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.POLLUTION_SCORE = exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.RESEARCH_COST_BY_AGE = exports.AGES = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
+exports.COMPUTER_LAUNCH_WAIT = exports.POLLUTION_SCORE = exports.BARBARIAN_CITIES = exports.BARBARIAN_UPRISINGS = exports.RESEARCH_COST_BY_AGE = exports.AGES = exports.FIXED_RESEARCH_COSTS = exports.TREATY_BREAKING = exports.BORDER_INTRUDERS = exports.ATTITUDE_DRIFT = exports.ENHANCED = void 0;
 /** Every rule set of this package. */
 exports.ENHANCED = 'civ2-enhanced';
 /**
@@ -63,4 +63,10 @@ exports.BARBARIAN_CITIES = 'civ2-enhanced:barbarian-cities';
  *  term, which, as the original, gives every civilization the same, whole-world penalty. Off to start with.
  */
 exports.POLLUTION_SCORE = 'civ2-enhanced:pollution-score';
+/**
+ * Above King, a computer player waits to launch while another computer player's ship in flight would arrive before its
+ *  own. Takes the place of `civ2-spaceship`'s launch, which, as the original, compares the other's arrival with the
+ *  barbarians' ship's, always 0, so it never waits. Off to start with.
+ */
+exports.COMPUTER_LAUNCH_WAIT = 'civ2-enhanced:computer-launch-wait';
 //# sourceMappingURL=RuleSets.js.map

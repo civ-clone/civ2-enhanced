@@ -1,7 +1,7 @@
 "use strict";
 // The ids of this package's rules that another package is expected to name: a host that switches or describes them.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.POLLUTION_SCORE_RULE = exports.BARBARIAN_CITY_BUILD_RULE = exports.UPRISING_RULE = exports.RATE_MULTIPLIER_BY_AGE_RULE = exports.AGE_REACHED_RULE = exports.REACH_AGE_RULE = exports.AGES_SETTLED_RULE = exports.AGES_JOINED_RULE = exports.AGE_BY_EPOCH_RULE = exports.TIERED_COST_RULE = exports.TREATY_BREAKING_RULE = exports.BORDER_INTRUDERS_RULE = exports.ATTITUDE_DRIFT_RULE = void 0;
+exports.COMPUTER_LAUNCH_WAIT_RULE = exports.POLLUTION_SCORE_RULE = exports.BARBARIAN_CITY_BUILD_RULE = exports.UPRISING_RULE = exports.RATE_MULTIPLIER_BY_AGE_RULE = exports.AGE_REACHED_RULE = exports.REACH_AGE_RULE = exports.AGES_SETTLED_RULE = exports.AGES_JOINED_RULE = exports.AGE_BY_EPOCH_RULE = exports.TIERED_COST_RULE = exports.TREATY_BREAKING_RULE = exports.BORDER_INTRUDERS_RULE = exports.ATTITUDE_DRIFT_RULE = void 0;
 /** A computer player's attitude drifts each turn from 0. */
 exports.ATTITUDE_DRIFT_RULE = 'civ2-enhanced:player/turn-start/attitude-drift';
 /** A computer player counts every square its borders are intruded on. */
@@ -28,4 +28,6 @@ exports.UPRISING_RULE = 'civ2-enhanced:turn/start/land-uprising';
 exports.BARBARIAN_CITY_BUILD_RULE = 'civ2-enhanced:city/build/barbarian';
 /** A civilization's score loses 10 for each polluted square in its own cities' radii, each once. */
 exports.POLLUTION_SCORE_RULE = 'civ2-enhanced:player/score/pollution';
+/** A computer player's launch, waiting above King for another computer player's ship that would arrive first. */
+exports.COMPUTER_LAUNCH_WAIT_RULE = 'civ2-enhanced:spaceship/computer/launch';
 //# sourceMappingURL=RuleIds.js.map

@@ -116,6 +116,16 @@ that rule runs. Without `civ2-barbarians` loaded they are only orphans.
   `civ2-barbarians:city/build/units-only`. Barbarian cities still build no improvements: the barbarians know no
   advances, so only Barracks would be open to them; whether they should build any is left open.
 
+## Spaceship
+
+- `civ2-enhanced:computer-launch-wait` (`COMPUTER_LAUNCH_WAIT`), off to start with:
+  `civ2-enhanced:spaceship/computer/launch`: above King, a computer player waits to launch while another computer
+  player's ship in flight would arrive before its own would, as the original means to. Supersedes
+  `civ2-spaceship:spaceship/computer/launch`, which, as the original, compares the other's arrival year with the
+  barbarians' ship's, always 0, so it never waits (`spaceship_add_part`). Otherwise the launch is civ2-spaceship's
+  (`computerLaunchRule(id, 'other-computers')`). civ2-spaceship loads after this package, so only one of the two is
+  ever on.
+
 ## Score
 
 - `civ2-enhanced:pollution-score` (`POLLUTION_SCORE`), off to start with: `civ2-enhanced:player/score/pollution`: each
