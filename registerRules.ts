@@ -4,6 +4,7 @@ import {
   BARBARIAN_CITIES,
   BARBARIAN_UPRISINGS,
   BORDER_INTRUDERS,
+  COMPUTER_LAUNCH_WAIT,
   ENHANCED,
   POLLUTION_SCORE,
   FIXED_RESEARCH_COSTS,
@@ -18,6 +19,7 @@ import {
   ATTITUDE_DRIFT_RULE,
   BARBARIAN_CITY_BUILD_RULE,
   BORDER_INTRUDERS_RULE,
+  COMPUTER_LAUNCH_WAIT_RULE,
   POLLUTION_SCORE_RULE,
   RATE_MULTIPLIER_BY_AGE_RULE,
   REACH_AGE_RULE,
@@ -30,6 +32,8 @@ import {
   LAND_UPRISING_RULE as CIV2_LAND_UPRISING_RULE,
 } from '@civ-clone/civ2-barbarians/RuleIds';
 import CIV2_SCORE_RULE_IDS from '@civ-clone/civ2-score/RuleIds';
+import CIV2_SPACESHIP_RULE_IDS from '@civ-clone/civ2-spaceship/RuleIds';
+import computerLaunch from './Rules/Spaceship/computerLaunch';
 import barbarianCityBuild from './Rules/Barbarians/cityBuild';
 import pollutionScore from './Rules/Score/pollution';
 import barbarianUprising from './Rules/Barbarians/uprising';
@@ -105,6 +109,14 @@ export const register = (game: Game): void => {
         POLLUTION_SCORE,
         { enabled: false, supersedes: [CIV2_SCORE_RULE_IDS.pollution] },
         POLLUTION_SCORE_RULE
+      ),
+      new RuleSet(
+        COMPUTER_LAUNCH_WAIT,
+        {
+          enabled: false,
+          supersedes: [CIV2_SPACESHIP_RULE_IDS.computerLaunch],
+        },
+        COMPUTER_LAUNCH_WAIT_RULE
       )
     )
   );
@@ -147,6 +159,9 @@ export const register = (game: Game): void => {
 
   // civ2-score loads after this, too: only one of the two pollution terms is ever on.
   game.rules.register(...pollutionScore(game));
+
+  // civ2-spaceship loads after this, too: only one of the two launches is ever on.
+  game.rules.register(...computerLaunch(game));
 };
 
 // The plugin loader imports each package for this side effect, as it does `registerRules` elsewhere.

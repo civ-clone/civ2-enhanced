@@ -70,3 +70,10 @@ export const BARBARIAN_CITIES = 'civ2-enhanced:barbarian-cities';
  *  term, which, as the original, gives every civilization the same, whole-world penalty. Off to start with.
  */
 export const POLLUTION_SCORE = 'civ2-enhanced:pollution-score';
+
+/**
+ * Above King, a computer player waits to launch while another computer player's ship in flight would arrive before its
+ *  own. Takes the place of `civ2-spaceship`'s launch, which, as the original, compares the other's arrival with the
+ *  barbarians' ship's, always 0, so it never waits. Off to start with.
+ */
+export const COMPUTER_LAUNCH_WAIT = 'civ2-enhanced:computer-launch-wait';
