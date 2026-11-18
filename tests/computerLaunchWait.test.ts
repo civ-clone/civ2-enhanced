@@ -31,7 +31,7 @@ import { register as registerSpaceship } from '@civ-clone/civ2-spaceship/registe
 
 // Two computer players at `Level`, a year a turn from 1990, with civ2-diplomacy, this package and civ2-spaceship (the
 //  plugin loader's order, by name). The first launches a fast ship; the second has one that would arrive later.
-const setUp = (Level: typeof King, on: boolean) => {
+const setUp = (Level: typeof King, on: boolean | null) => {
   const rules = new RuleRegistry(),
     turn = new Turn(),
     year = new Year(turn, rules),
@@ -44,7 +44,9 @@ const setUp = (Level: typeof King, on: boolean) => {
   register(game);
   registerSpaceship(game);
   game.difficulty.set(Level);
-  game.ruleSets.set(COMPUTER_LAUNCH_WAIT, on);
+  if (on !== null) {
+    game.ruleSets.set(COMPUTER_LAUNCH_WAIT, on);
+  }
   game.players.register(first, second);
   game.clients.register(new AIClient(first), new AIClient(second));
   [first, second].forEach((player) =>
@@ -120,6 +122,22 @@ describe('the computer launch wait', (): void => {
   it("waits above King while another computer player's ship arrives first, as the original never does", (): void => {
     expect(setUp(Emperor, false).launches()).eql([true]);
     expect(setUp(Emperor, true).launches()).eql([false]);
+  });
+
+  it('is off with nothing switched, and gives back the original launch when switched off again', (): void => {
+    const { game, launches } = setUp(Emperor, null);
+
+    expect(game.ruleSets.state(COMPUTER_LAUNCH_WAIT)).equal('off');
+    expect(launches()).eql([true]);
+
+    game.ruleSets.set(COMPUTER_LAUNCH_WAIT, true);
+    expect(launches()).eql([false]);
+
+    game.ruleSets.set(COMPUTER_LAUNCH_WAIT, false);
+    expect(launches()).eql([true]);
+    expect(
+      game.rules.getById(CIV2_SPACESHIP_RULE_IDS.computerLaunch)!.enabled()
+    ).true;
   });
 
   it("doesn't wait at King", (): void => {
